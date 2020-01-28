@@ -1,0 +1,18 @@
+﻿@using DevExpress.DataAccess.ConnectionParameters
+
+@{
+    ViewBag.Title = "TemplateReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    MsSqlConnectionParameters connectionParameters =
+        new MsSqlConnectionParameters("localhost", "bms", "sa", "Sldd140124",MsSqlAuthorizationType.SqlServer);
+    DevExpress.DataAccess.Sql.SqlDataSource ds = new DevExpress.DataAccess.Sql.SqlDataSource(connectionParameters);
+}
+
+@Html.DevExpress().ReportDesigner(settings => {
+    settings.Name = "ReportDesigner";
+                                    
+}).Bind(new DevExpress.XtraReports.UI.XtraReport()).GetHtml()

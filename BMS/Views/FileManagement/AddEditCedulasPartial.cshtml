@@ -1,0 +1,140 @@
+﻿
+
+@using Models.Repository
+@model Cedulas
+@{
+    //  EditingMode editingMode = ViewBag.EditingMode;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.PersonalInformationId, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Name";
+                settings.Properties.NullText = settings.Properties.Caption;
+                settings.Properties.TextField = "FullName";
+                settings.Properties.ValueField = "Id";
+
+            }).BindList(new UnitOfWork().PersonalInformationsRepo.Get()).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.CtcNo, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "CtcNo";
+                settings.Properties.NullText = settings.Properties.Caption;
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().DateEditFor(m => m.DateIssued, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Date Issued";
+                settings.Properties.NullText = settings.Properties.Caption;
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.PlaceIssued, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Place Issued";
+                settings.Properties.NullText = settings.Properties.Caption;
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().SpinEditFor(m => m.BasicTax, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.NullText = "A. Basic Community Tax(P5.00) or Exempted(P1.00)";
+                settings.Properties.Caption ="Basic Tax"; //settings.Properties.NullText;
+
+            }).Bind(Model?.BasicTax ?? 5).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().SpinEditFor(m => m.AdditionalTax, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.NullText = "B. Additional Community Tax(Tax not exceed P5,000.00)";
+                settings.Properties.Caption ="Addition Comm. Tax"; //settings.Properties.NullText;
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().SpinEditFor(m => m.GrossEarning, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.NullText = "Gross Receipts or Earnings Derived from business during the preceding year(P 1.00 for every 1,000.00)";
+                settings.Properties.Caption ="Gross Earning"; // settings.Properties.NullText;
+
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().SpinEditFor(m => m.GrossReceipt, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.NullText = "Salaries or Gross Receipt or Earning Derived from exercise of Profession or Pursuit of any Occupation(P1.00 for every 1,000.00)";
+                settings.Properties.Caption ="Gross Receipt"; // settings.Properties.NullText;
+
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().SpinEditFor(m => m.IncomeRealPropertyIndividual, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Inc. from real prop.";
+                settings.Properties.NullText = settings.Properties.Caption;
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        @{
+            Html.DevExpress().Button(settings =>
+           {
+               settings.Name = "btnSubmit";
+               settings.Text = "Submit";
+               settings.ClientSideEvents.Click = "function(s,e){CedulasGridView.UpdateEdit()}";
+           }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnCancel";
+                settings.Text = "Cancel";
+                settings.ClientSideEvents.Click = "function(s,e){CedulasGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+</div>

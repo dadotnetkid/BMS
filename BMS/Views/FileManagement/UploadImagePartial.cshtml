@@ -1,0 +1,12 @@
+﻿@model PersonalInformations
+@using (Html.BeginForm())
+{
+    @Html.DevExpress().BinaryImageFor(m => m.Photo, settings =>
+    {
+
+        settings.Width =Unit.Percentage(100);
+
+        settings.Properties.EditingSettings.Enabled = true;
+        settings.CallbackRouteValues = new {  Controller = "FileManagement", Action = "UploadImagePartial" };
+    }).GetHtml()
+}

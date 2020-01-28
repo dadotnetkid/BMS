@@ -1,0 +1,116 @@
+﻿@using BMS.Controllers
+@using Helpers
+@*<p>@ViewContext.RouteData.Values["Controller"].ToString()</p>*@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MAIN NAVIGATION</li>
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(HomeController.Index) && ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+            </li>
+
+            @*<li class="@("treeview " + (ControllerHelpers.IsControllerName("transactions")  ? "menu-open active" : ""))">
+                <a href="">
+                    <i class="fa fa-book"></i> <span>Transactions</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@(ControllerHelpers.IsMenuBarActive("Index", "transactions") ?"active":"")">
+                        <a href="@Url.Action("Index", "transactions")"><i class="fa fa-list"></i> <span>Transactions List</span></a>
+                    </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Productions", "transactions")?"active":"")">
+                        <a href="@Url.Action("Productions", "transactions")"><i class="fa fa-list"></i> <span>Production List</span></a>
+                    </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Index", "ProgramOfWorks")?"active":"")">
+                        <a href="@Url.Action("Index", "ProgramOfWorks")"><i class="fa fa-list"></i> <span>Program of Works</span></a>
+                    </li>
+
+                </ul>
+            </li>*@
+
+   
+
+        <li class="@("treeview " + (ControllerHelpers.IsControllerName("FileManagement")  ? "menu-open active" : ""))">
+            <a href="">
+                <i class="fa fa-file"></i> <span>File Management</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="@(ControllerHelpers.IsMenuBarActive("TransactionItems", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("PersonalInformation", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Personal Information</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Cedulas", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("Cedulas", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Cedula's</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Groups", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("Groups", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Groups</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Blotters", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("Blotters", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Blotters</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("ComplaintTypes", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("ComplaintTypes", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Complaint Types</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Meeting", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("Meeting", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Meetings</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Activity", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("Activity", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Activities</span></a>
+                </li>
+
+                <li class="@(ControllerHelpers.IsMenuBarActive("Templates", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("Templates", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Templates</span></a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="@("treeview " + (ViewContext.RouteData.Values["Controller"].ToString().ToLower() == "reports" ? "active" : ""))">
+            <a href="">
+                <i class="fa fa-print"></i> <span>Reports</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="@(ControllerHelpers.IsMenuBarActive("Certifications", "Report")?"active":"")">
+                    <a href="@Url.Action("Certifications", "Report")"><i class="fa fa-circle-o"></i> <span>Certifications</span></a>
+                </li>
+            </ul>
+        </li>
+            <li class="@("treeview " + (ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : ""))">
+                <a href="">
+                    <i class="fa fa-gear"></i> <span>Maintenance</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.Users).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                        <a href="@Url.Action("users", "maintenance")"><i class="fa fa-circle"></i> <span>Users</span></a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.UserRoles).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                        <a href="@Url.Action("userroles", "maintenance")"><i class="fa fa-circle"></i> <span>User Roles</span></a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.Logs).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                        <a href="@Url.Action("logs", "maintenance")"><i class="fa fa-circle"></i> <span>Logs</span></a>
+                    </li>
+                    @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.Controllers).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                        <a href="@Url.Action("controllers", "maintenance")"><i class="fa fa-circle"></i> <span>Authorized Users</span></a>
+                    </li>*@
+                </ul>
+            </li>
+            
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(AboutController.Index) && ViewContext.RouteData.Values["Controller"].ToString() == "About" ? "active" : "")">
+                <a href="@Url.Action("Index", "About")"><i class="fa fa-info-circle"></i> <span>About Us</span></a>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

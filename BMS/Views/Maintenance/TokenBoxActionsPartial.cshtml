@@ -1,0 +1,21 @@
+﻿
+@{
+    Html.DevExpress().TokenBox(settings =>
+    {
+        settings.Name = "ActionName";
+
+        settings.Properties.Caption = "Action";
+        settings.Width = Unit.Percentage(100);
+        settings.PreRender = (s, e) =>
+        {
+            ASPxTokenBox tokenBox = s as ASPxTokenBox;
+            if (ViewBag.ActionNames != null)
+            {
+                foreach (var i in (IEnumerable<UserRolesInActions>)ViewBag.ActionNames)
+                {
+                    tokenBox.Tokens.Add(i.Action);
+                }
+            }
+        };
+    }).BindList(Model).GetHtml();
+}

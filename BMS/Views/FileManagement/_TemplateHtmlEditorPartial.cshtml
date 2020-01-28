@@ -1,0 +1,16 @@
+@using BMS.Controllers;
+@model Templates
+@Html.DevExpress().HtmlEditor(settings => {
+    settings.Name = "Template";
+    settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "TemplateHtmlEditorPartial" };
+    settings.Width = Unit.Percentage(100);
+    settings.Height = 700;
+    settings.ToolbarMode = HtmlEditorToolbarMode.Menu;
+
+    settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.UploadCallbackRouteValues = new { Controller = "FileManagement", Action = "TemplateHtmlEditorPartialImageUpload" };
+    settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.UploadFolder = FileManagementControllerTemplateHtmlEditorSettings.ImageUploadDirectory;
+    settings.SettingsDialogs.InsertImageDialog.SettingsImageUpload.ValidationSettings.Assign(FileManagementControllerTemplateHtmlEditorSettings.ImageUploadValidationSettings);
+
+
+    settings.SettingsDialogs.InsertImageDialog.SettingsImageSelector.Assign(FileManagementControllerTemplateHtmlEditorSettings.ImageSelectorSettings);
+}).Bind(Model?.Template).GetHtml()

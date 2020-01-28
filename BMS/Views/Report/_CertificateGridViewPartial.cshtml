@@ -1,0 +1,107 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "CertificateGridView";
+        settings.CallbackRouteValues = new { Controller = "Report", Action = "CertificateGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Report", Action = "CertificateGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Report", Action = "CertificateGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Report", Action = "CertificateGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        //   settings.ClientSideEvents.RowClick = "function(s,e){ s.GetSelectedFieldValues('Id', OnGetValues); }";
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.AddAddEditDeleteToolbar(tb =>
+        {
+            tb.Enabled = true;
+            tb.Position = GridToolbarPosition.Top;
+
+
+            tb.Items.Add(GridViewToolbarCommand.New);
+            tb.Items.Add(GridViewToolbarCommand.Edit);
+            tb.Items.Add(GridViewToolbarCommand.Delete);
+            tb.Items.Add(x =>
+            {
+                x.SetTemplateContent(html =>
+                {
+                    Html.DevExpress().Button(btn =>
+                    {
+                        btn.Name = "btnPrint";
+                        btn.Text = "Print";
+                        btn.ClientEnabled = false;
+                        btn.ClientSideEvents.Click = "function(s,e){showDialog({actionName:'PrintCertificate',controllerName:'Report',Id:certificateId })}";
+                    }).GetHtml();
+                });
+            });
+        });
+        settings.ClientSideEvents.SelectionChanged = "function(s,e){GridSelectionChanged(s,e);}";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Columns.Add("PersonalInformations.FullName");
+        settings.Columns.Add("CertificationTypes.CertificationType");
+        settings.Columns.Add("IssuedDate");
+        settings.Columns.Add("Purpose");
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "PersonalInformations.FullName")?.ToString() ?? "New Certificate";
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){CertificateGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    if (ViewData["EditError"] != null)
+                    {
+                        ViewContext.Writer.Write("<div class='row'><div class='col-lg-12'><div class='alert alert-danger' style='padding-bottom: 5px;padding-top: 5px;'>" + ViewData["EditError"] + "</div></div></div>");
+
+                    }
+                    var model = ViewData["model"] as Certifications;
+                    var id = col.KeyValue;
+                    if (model != null && id==null)
+                    {
+                        Html.RenderPartial("AddEditCertification", ViewData["model"]);
+                    }
+                    else
+                    {
+
+                        Html.RenderAction("AddEditCertification", new { certificateId = id });
+                    }
+
+
+                });
+            }).GetHtml();
+
+
+
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
